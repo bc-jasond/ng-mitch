@@ -7,7 +7,7 @@
  *
  * @type {angular.Module}
  */
-var mitch = angular.module('mitch', ['ngRoute']);
+var mitch = angular.module('mitch', ['ngRoute', 'ui.sortable']);
 
 mitch.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
