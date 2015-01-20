@@ -19,10 +19,39 @@ button {
 	appearance: none;
 }
 
+.btn {
+	background: #adadad;
+	background-image: -webkit-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background-image: -moz-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background-image: -ms-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background-image: -o-linear-gradient(top, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	background-image: linear-gradient(to bottom, rgba(132, 110, 100, 0.8), rgba(101, 84, 76, 0.8));
+	-webkit-border-radius: 1;
+	-moz-border-radius: 1;
+	border-radius: 1px;
+	color: #ffffff;
+	font-size: 26px;
+	padding: 15px 20px;
+	text-decoration: none;
+	width: 100%;
+	margin: 0;
+}
+
+.btn:hover {
+	background: #9cdbff;
+	background-image: -webkit-linear-gradient(top, #9cdbff, #50bcfa);
+	background-image: -moz-linear-gradient(top, #9cdbff, #50bcfa);
+	background-image: -ms-linear-gradient(top, #9cdbff, #50bcfa);
+	background-image: -o-linear-gradient(top, #9cdbff, #50bcfa);
+	background-image: linear-gradient(to bottom, #9cdbff, #50bcfa);
+	text-decoration: none;
+}
+
+
 body {
 	font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	line-height: 1.4em;
-	background: #eaeaea url('bg.png');
+	background: #eaeaea url('/img/bg.png');
 	color: #4d4d4d;
 	width: 550px;
 	margin: 0 auto;
@@ -31,26 +60,32 @@ body {
 	-ms-font-smoothing: antialiased;
 	-o-font-smoothing: antialiased;
 	font-smoothing: antialiased;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 button,
 input[type="checkbox"] {
-  outline: none;
+	outline: none;
 }
 
 #todoapp {
 	background: #fff;
 	background: rgba(255, 255, 255, 0.9);
-	margin: 130px 0 40px 0;
+	margin: 100px 0 40px 0;
 	border: 1px solid #ccc;
 	position: relative;
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2),
-				0 25px 50px 0 rgba(0, 0, 0, 0.15);
+	0 25px 50px 0 rgba(0, 0, 0, 0.15);
 }
 
-#todoapp:before {
+/*#todoapp:before {
 	content: '';
 	border-left: 1px solid #f5d6d6;
 	border-right: 1px solid #f5d6d6;
@@ -59,7 +94,7 @@ input[type="checkbox"] {
 	top: 0;
 	left: 40px;
 	height: 100%;
-}
+}*/
 
 #todoapp input::-webkit-input-placeholder {
 	font-style: italic;
@@ -72,14 +107,14 @@ input[type="checkbox"] {
 
 #todoapp h1 {
 	position: absolute;
-	top: -120px;
+	top: -88px;
 	width: 100%;
-	font-size: 70px;
+	font-size: 42px;
 	font-weight: bold;
 	text-align: center;
 	color: #b3b3b3;
-	color: rgba(255, 255, 255, 0.3);
-	text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+	color: rgba(255, 255, 255, 0.32);
+	text-shadow: -1px -1px rgba(0, 0, 0, 0.28);
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	-ms-text-rendering: optimizeLegibility;
@@ -186,10 +221,6 @@ label[for='toggle-all'] {
 	border-bottom: 1px dotted #ccc;
 }
 
-#todo-list li:last-child {
-	border-bottom: none;
-}
-
 #todo-list li.editing {
 	border-bottom: none;
 	padding: 0;
@@ -242,8 +273,7 @@ label[for='toggle-all'] {
 #todo-list li label {
 	white-space: pre;
 	word-break: break-word;
-	padding: 15px 60px 15px 15px;
-	margin-left: 45px;
+	padding: 15px 25px;
 	display: block;
 	line-height: 1.2;
 	-webkit-transition: color 0.4s;
@@ -272,8 +302,9 @@ label[for='toggle-all'] {
 
 #todo-list li .destroy:hover {
 	text-shadow: 0 0 1px #000,
-				 0 0 10px rgba(199, 107, 107, 0.8);
+	0 0 10px rgba(199, 107, 107, 0.8);
 	-webkit-transform: scale(1.3);
+	-ms-transform: scale(1.3);
 	transform: scale(1.3);
 }
 
@@ -295,12 +326,12 @@ label[for='toggle-all'] {
 
 #footer {
 	color: #777;
-	padding: 0 15px;
+	padding: 0;
 	position: absolute;
 	right: 0;
 	bottom: -31px;
 	left: 0;
-	height: 20px;
+	height: 30px;
 	z-index: 1;
 	text-align: center;
 }
@@ -311,13 +342,8 @@ label[for='toggle-all'] {
 	right: 0;
 	bottom: 31px;
 	left: 0;
-	height: 50px;
+	height: 72px;
 	z-index: -1;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3),
-				0 6px 0 -3px rgba(255, 255, 255, 0.8),
-				0 7px 1px -3px rgba(0, 0, 0, 0.3),
-				0 43px 0 -6px rgba(255, 255, 255, 0.8),
-				0 44px 2px -6px rgba(0, 0, 0, 0.2);
 }
 
 #todo-count {
@@ -366,7 +392,7 @@ label[for='toggle-all'] {
 }
 
 #info {
-	margin: 65px auto 0;
+	margin: 36px auto 0;
 	color: #a6a6a6;
 	font-size: 12px;
 	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
@@ -398,6 +424,7 @@ label[for='toggle-all'] {
 		width: 65px;
 		height: 41px;
 		-webkit-transform: rotate(90deg);
+		-ms-transform: rotate(90deg);
 		transform: rotate(90deg);
 		-webkit-appearance: none;
 		appearance: none;
