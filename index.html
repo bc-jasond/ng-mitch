@@ -10,7 +10,7 @@
 		<base href="/">
 	</head>
 	<body>
-		<section id="todoapp" ng-controller="ListCtrl">
+		<section id="todoapp" ng-controller="ListCtrl" ng-cloak>
 			<header id="header">
 				<h1 ng-dblclick="enterEditMode()">{{list.title}}</h1>
 				<div id="header-edit" ng-show="editMode">
@@ -38,7 +38,7 @@
 			<button class="btn" ng-click="handleButton()">{{editMode ? 'Save' : 'Vote'}}</button>
 			<button class="btn cancel" ng-click="toBackup()" ng-show="editMode">Cancel All Edits!</button>
 		</section>
-		<footer id="info">
+		<footer id="info" ng-cloak>
 			<p>drag to reorder list, 1st choice goes on top</p>
 			<p>double-click the title to enter edit mode</p>
 		</footer>
