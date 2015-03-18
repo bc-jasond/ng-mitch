@@ -6,47 +6,87 @@
  * - retrieves and persists the model via the "blank" service
  * - exposes the model to the template and provides event handlers
  */
-mitch.controller('ListCtrl', function ListCtrl($scope, $location) {
+mitch.controller('ListCtrl', function ListCtrl($scope, $location, $route, $routeParams, List) {
 
-	/**
-	 * hard-code the list here in the controller for now
-	 */
-	var backup = {
-			id: 1,
-			title: "Sample List Title",
-			items: [
-				{ id: 40, content: "cheese" },
-				{ id: 41, content: "pepperoni" },
-				{ id: 42, content: "olives" },
-				{ id: 43, content: "anchovies" },
-				{ id: 44, content: "mushrooms" }
-			]
+	var newlist = {
+			id: 0,
+			title: "",
+			items: []
 		},
+		backup,
 		items,
-		title;
-
-	$scope.list = angular.copy(backup);
-	items = $scope.list.items;
-	title = $scope.list.title;
+		title,
+		resolveList = function(list) {
+			$scope.list = list;
+			backup = angular.copy($scope.list);
+			items = $scope.list.items;
+			title = $scope.list.title;
+		};
 
 	$scope.newItem = '';
 	$scope.editedItem = null;
 	$scope.editMode = false;
 
-	// get rid of the annoying #, let's use HTML5 routing so we can have canonical URLs that get remembered
-	if ($location.path() === '') {
-		$location.path('/');
-	}
+	$scope.$on('$routeChangeSuccess', function() {
+		var id = $routeParams.listId;
+		// id is undefined because first the /lists route fires a routeChangeSuccess and we need to ignore that
+		if (id === 'new') {
+			resolveList(newlist);
+			$scope.enterEditMode();
+		} else if (id !== undefined) {
+			List.get({ listId: $routeParams.listId }, resolveList);
+		}
+	});
 
-	$scope.location = $location;
+	$scope.saveList = function() {
+		$scope.editMode = false;
+		if ($scope.list.id === 0) {
+			// create will POST to create a new list
+			List.create({}, $scope.list,
+				function(list) {
+					// rewrite the URL to reflect the new id, it will cause a new GET to /lists/:listId
+					// this is unfortunate, because we already have the data in the response from the POST
+					$location.path('/lists/' + list.id);
+				},
+				function(httpResponse) {
+					// error handling? retry?
+				}
+			);
+		} else {
+			// update will PUT to save an existing list
+			List.update({ listId: $scope.list.id }, $scope.list, resolveList,
+				function(httpResponse) {
+					// error handling? retry?
+				}
+			);
+		}
+	};
 
 	$scope.handleButton = function() {
 		if ($scope.editMode) {
-			$scope.editMode = false;
+			$scope.addItem();
+			$scope.saveList();
 		} else {
 			$scope.logList();
 		}
-	}
+	};
+
+	$scope.enterEditMode = function() {
+		title = $scope.list.title;
+		$scope.editedItem = null;
+		$scope.editMode = true;
+	};
+
+	$scope.revertChanges = function() {
+		if ($routeParams.listId === 'new') { return; }
+		$scope.editMode = false;
+		$scope.list = angular.copy(backup);
+	};
+
+	$scope.revertTitle = function() {
+		$scope.list.title = title;
+		$scope.editMode = false;
+	};
 
 	/**
 	 * when the user clicks 'Vote' simply log the list object for now
@@ -58,24 +98,12 @@ mitch.controller('ListCtrl', function ListCtrl($scope, $location) {
 		});
 	};
 
-	$scope.toBackup = function() {
-		$scope.editMode = false;
-		$scope.list = angular.copy(backup);
-	};
-
 	$scope.addItem = function () {
-		var newItem = $scope.newItem.trim(),
-			newId = 0;//Math.max.apply(null, list.items.map(function(e){ return e.id })) + 1;
+		var newItem = $scope.newItem.trim();
 
-		if (newItem.length === 0) {
-			return;
-		}
+		if (newItem.length === 0) { return; }
 
-		items.push({
-			id: newId,
-			content: newItem
-		});
-
+		items.push({ id: 0, content: newItem });
 		$scope.newItem = '';
 	};
 
@@ -86,6 +114,9 @@ mitch.controller('ListCtrl', function ListCtrl($scope, $location) {
 	};
 
 	$scope.doneEditing = function (item) {
+		// HACK: jQuery and angular don't play nice, double event firing causes this to be called twice in a row
+		// ui.sortable is easy, but probably needs to be swapped out for an angular directive
+		if ($scope.editedItem === null) { return; }
 		// if we double clicked on a different item, don't set editedItem to null
 		if (item.content === $scope.editedItem.content) {
 			$scope.editedItem = null;
@@ -97,23 +128,12 @@ mitch.controller('ListCtrl', function ListCtrl($scope, $location) {
 		}
 	};
 
-	$scope.enterEditMode = function() {
-		title = $scope.list.title;
-		$scope.editedItem = null;
-		$scope.editMode = true;
-	}
-
 	$scope.revertEditing = function (item) {
 		var idx = items.indexOf(item);
 
 		items[idx] = $scope.originalItem;
 		$scope.doneEditing($scope.originalItem);
 	};
-
-	$scope.revertTitle = function() {
-		$scope.list.title = title;
-		$scope.editMode = false;
-	}
 
 	$scope.removeItem = function (item) {
 		items.splice(items.indexOf(item), 1);

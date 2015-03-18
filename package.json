@@ -1,5 +1,5 @@
 {
-  "version": "0.1.1",
+  "version": "0.3.0",
   "private": true,
   "name": "ng-mitch",
   "description": "A most excellent collective decision making tool",
@@ -10,7 +10,8 @@
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
     "protractor": "~1.0.0",
-    "live-server": "^0.6.3",
+    "superstatic": "^2.1.0",
+    "json-server": "0.6.2",
     "tmp": "0.0.23",
     "bower": "^1.3.1",
     "shelljs": "^0.2.6"
@@ -19,7 +20,7 @@
     "postinstall": "bower install",
 
     "prestart": "npm install",
-    "start": "live-server",
+    "start": "node -e \"require('shelljs/global'); exec('json-server db.json', {async:true}); exec('superstatic', {async:true});\" ",
 
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",

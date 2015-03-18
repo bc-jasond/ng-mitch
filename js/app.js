@@ -7,9 +7,18 @@
  *
  * @type {angular.Module}
  */
-var mitch = angular.module('mitch', ['ngRoute', 'ui.sortable']);
+var mitch = angular.module('mitch', ['ngRoute', 'ui.sortable', 'mitchServices']);
 
-mitch.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    $locationProvider.html5Mode(true);
+mitch.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
+	$routeProvider.
+		when('/lists/:listId', {
+			templateUrl: 'index.html',
+			controller: 'ListCtrl'
+		}).
+		otherwise({
+			redirectTo: '/lists/new'
+		});
+
+	$locationProvider.html5Mode(true);
 }]);
 

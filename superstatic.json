@@ -1,0 +1,13 @@
+{
+  "routes":
+    {"**": "index.html"}
+  ,
+  "headers": {
+    "/js/**": {
+      "content-type": "text/javascript"
+    },
+    "/css/**": {
+      "content-type": "text/css"
+    }
+  }
+}

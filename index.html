@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Mitch List</title>
-		<link rel="stylesheet" href="css/base.css">
+		<link rel="stylesheet" href="/css/base.css" type="text/css">
 		<link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon">
 		<link rel="icon" href="/favicon.ico?v=2" type="image/x-icon">
 		<style>[ng-cloak] { display: none; }</style>
@@ -14,12 +14,12 @@
 			<header id="header">
 				<h1 ng-dblclick="enterEditMode()">{{list.title}}</h1>
 				<div id="header-edit" ng-show="editMode">
-				<form ng-submit="editMode = false;">
-					<input id="title" class="edit" ng-model="list.title" todo-focus="editMode" todo-escape="revertTitle()">
-				</form>
-				<form id="todo-form" ng-submit="addItem()">
-					<input id="new-todo" placeholder="Add a new item here" ng-model="newItem" autofocus>
-				</form>
+					<form ng-submit="saveList()">
+						<input id="title" class="edit" placeholder="Add the title here" ng-model="list.title" todo-focus="editMode" todo-escape="revertTitle()">
+					</form>
+					<form id="todo-form" ng-submit="addItem()">
+						<input id="new-todo" placeholder="Add a new item here" ng-model="newItem" ng-blur="addItem()" autofocus>
+					</form>
 				</div>
 			</header>
 			<section id="main" ng-show="list.items.length" ng-cloak>
@@ -35,8 +35,8 @@
 					</li>
 				</ul>
 			</section>
-			<button class="btn" ng-click="handleButton()">{{editMode ? 'Save' : 'Vote'}}</button>
-			<button class="btn cancel" ng-click="toBackup()" ng-show="editMode">Cancel All Edits!</button>
+			<button class="btn" ng-mousedown="handleButton()">{{editMode ? 'Save' : 'Vote'}}</button>
+			<button class="btn cancel" ng-click="revertChanges()" ng-show="editMode">Cancel All Edits!</button>
 		</section>
 		<footer id="info" ng-cloak>
 			<p>drag to reorder list, 1st choice goes on top</p>
@@ -46,9 +46,11 @@
 		<script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 		<script src="bower_components/angular/angular.min.js"></script>
 		<script src="bower_components/angular-route/angular-route.min.js"></script>
+		<script src="bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
 		<script src="js/app.js"></script>
 		<script src="js/controllers/todoCtrl.js"></script>
+		<script src="js/services/list.js"></script>
 		<script src="js/directives/todoFocus.js"></script>
 		<script src="js/directives/todoEscape.js"></script>
 	</body>
