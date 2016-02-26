@@ -17,21 +17,23 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "postinstall": "bower install",
-
     "prestart": "npm install",
-    "start": "node -e \"require('shelljs/global'); exec('json-server db.json', {async:true}); exec('superstatic', {async:true});\" ",
-
+    "start": "node -e \"require('shelljs/global'); exec('json-server db.json', {async:true}); exec('superstatic --port 8000', {async:true});\" ",
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
     "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
-
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
-
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
-
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+  },
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "angular-ui-sortable": "^0.13.4",
+    "jquery": "^2.2.1",
+    "jquery-ui": "^1.10.5"
   }
 }

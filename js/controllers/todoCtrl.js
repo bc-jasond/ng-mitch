@@ -43,10 +43,10 @@ mitch.controller('ListCtrl', function ListCtrl($scope, $location, $route, $route
 		if ($scope.list.id === 0) {
 			// create will POST to create a new list
 			List.create({}, $scope.list,
-				function(list) {
+				function(response) {
 					// rewrite the URL to reflect the new id, it will cause a new GET to /lists/:listId
 					// this is unfortunate, because we already have the data in the response from the POST
-					$location.path('/lists/' + list.id);
+					$location.path('/list/' + response.id);
 				},
 				function(httpResponse) {
 					// error handling? retry?

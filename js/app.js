@@ -11,12 +11,12 @@ var mitch = angular.module('mitch', ['ngRoute', 'ui.sortable', 'mitchServices'])
 
 mitch.config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider, $httpProvider) {
 	$routeProvider.
-		when('/lists/:listId', {
+		when('/list/:listId', {
 			templateUrl: 'index.html',
 			controller: 'ListCtrl'
 		}).
 		otherwise({
-			redirectTo: '/lists/new'
+			redirectTo: '/list/new'
 		});
 
 	$locationProvider.html5Mode(true);
