@@ -23,7 +23,7 @@
 				</div>
 			</header>
 			<section id="main" ng-show="list.items.length" ng-cloak>
-				<ul ui-sortable ng-model="list.items" id="todo-list">
+				<ul ng-model="list.items" id="todo-list">
 					<li ng-repeat="item in list.items" ng-class="{editing: editMode && item == editedItem}">
 						<div class="view">
 							<label ng-dblclick="editItem(item)">{{item.content}}</label>
